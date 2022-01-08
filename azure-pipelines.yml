@@ -7,8 +7,8 @@ trigger:
 - master
 
 pool:
-  name: Default
-  vmImage: devops
+  name: devops
+  vmImage: Devops
 
 steps:
 - script: echo Hello, world!
