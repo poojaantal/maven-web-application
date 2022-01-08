@@ -11,10 +11,26 @@ pool:
   vmImage: Devops
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.11'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    testResultsFiles: '**/TEST-*.xml'
+    goals: 'compile'
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'compile'
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.11'
+    mavenVersionOption: 'Default'
+    mavenOptions: '-Xmx3072m'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: 'latest'
